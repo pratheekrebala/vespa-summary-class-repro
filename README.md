@@ -1,0 +1,1 @@
+Reproduction code for Vespa [summary class bug](https://github.com/vespa-engine/vespa/issues/31384)

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright Vespa.ai. Licensed under the terms of the Apache 2.0 license. See LICENSE in the project root. -->
+<services version="1.0" xmlns:deploy="vespa" xmlns:preprocess="properties">
+
+  <container id="default" version="1.0">
+    <nodes>
+      <node hostalias="node1" />
+    </nodes>
+    <component id="linguistics"
+            bundle="lucene-linguistics"
+            class="com.yahoo.language.lucene.LuceneLinguistics">
+        <config name="com.yahoo.language.lucene.lucene-analysis"/>
+    </component>
+    <search>
+        <config name="container.qr-searchers">
+            <tag>
+                <bold>
+                    <open>&lt;mark&gt;</open>
+                    <close>&lt;/mark&gt;</close>
+                </bold>
+                <separator>&lt;sep&gt;</separator>
+            </tag>
+        </config>
+    </search>
+    <document-api />
+  </container>
+
+  <content id="summaryissue" version="1.0">
+    <min-redundancy>2</min-redundancy>
+    <documents>
+      <document type="record" mode="index" />
+    </documents>
+    <nodes>
+      <node hostalias="node1" distribution-key="0" />
+    </nodes>
+  </content>
+
+</services>

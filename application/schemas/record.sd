@@ -1,0 +1,57 @@
+schema record {
+    field language type string {
+        indexing: "en" | set_language
+    }
+
+    document record {
+        field record_id type string {
+            indexing: summary | index | attribute
+        }
+
+        field parent_id type string {
+            indexing: attribute | summary
+        }
+
+        field collection_id type string {
+            indexing: summary | attribute
+            attribute: fast-search
+        }
+
+        field image_order type int {
+            indexing: summary | attribute
+        }
+
+        field contents type string {
+            indexing: index | summary
+            bolding: on
+            stemming: best
+            index: enable-bm25
+        }
+    }
+
+    fieldset default {
+        fields: record_id, contents
+    }
+
+    rank-profile bm25 inherits default {
+        first-phase {
+            expression {
+                bm25(contents)
+            }
+        }
+    }
+
+    document-summary basic inherits default {
+        summary snippets {
+            source: contents
+            dynamic
+        }
+    }
+
+    document-summary sample {
+        summary record_id {}
+        summary image_order {}
+        summary collection_id {}
+        summary parent_id {}
+    }
+}

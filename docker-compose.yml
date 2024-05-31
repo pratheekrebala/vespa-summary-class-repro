@@ -1,0 +1,11 @@
+services:
+  vespa:
+    image: vespaengine/vespa:8.348.21
+    ports:
+      - 9090:8080
+      - 29071:19071
+    volumes:
+      - vespa-var:/opt/vespa/var
+
+volumes:
+  vespa-var: {}
